@@ -5,10 +5,10 @@ using UnityEngine;
 public class PlaneController : MonoBehaviour {
 
     public float speed = 1f;
-    Rigidbody2D rb;
+    private Rigidbody2D rb;
 
     public GameObject bullet;
-    Vector2 bulletPos;
+    private Vector2 bulletPos;
 
 	// Use this for initialization
 	void Start () {

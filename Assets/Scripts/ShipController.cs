@@ -2,25 +2,23 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BulletScript : MonoBehaviour {
+public class ShipController : MonoBehaviour {
 
-    public float speed = 1f;
     private Rigidbody2D rb;
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start () {
         rb = GetComponent<Rigidbody2D>();
-	}
+    }
 	
 	// Update is called once per frame
 	void Update () {
-        rb.velocity = new Vector2(0f, speed);
-        Destroy(gameObject, 2f);
+		
 	}
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag("Enemy"))
+        if (collision.gameObject.CompareTag("Bullet"))
         {
             Destroy(gameObject);
         }
