@@ -18,8 +18,6 @@ public class PlaneController : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-
-
         if (Input.GetButton("Fire1"))
         {
             if (loaded())
@@ -45,7 +43,7 @@ public class PlaneController : MonoBehaviour {
     void fire()
     {
         bulletPos = transform.position;
-        bulletPos += new Vector2(0, 0.04f);
+        bulletPos += new Vector2(0, 0.14f);
         Instantiate(bullet, bulletPos, Quaternion.identity);
     }
 }

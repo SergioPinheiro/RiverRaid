@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class BulletScript : MonoBehaviour {
 
-    public float speed = 1f;
+    public float speed = 2f;
     private Rigidbody2D rb;
 
 	// Use this for initialization
@@ -15,14 +15,11 @@ public class BulletScript : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         rb.velocity = new Vector2(0f, speed);
-        Destroy(gameObject, 2f);
+        Destroy(gameObject, 1.5f);
 	}
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag("Enemy"))
-        {
-            Destroy(gameObject);
-        }
+        Destroy(gameObject);
     }
 }
