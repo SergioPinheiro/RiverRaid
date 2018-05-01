@@ -11,21 +11,29 @@ public class PlaneController : MonoBehaviour {
 
     public GameObject bullet;
     private Vector2 bulletPos;
+    public float reloadTime = 0.5f;
+    private float nextBullet = 0.0f;
+
+    public Sprite toRight;
+    public Sprite toLeft;
+    private Sprite forward;
 
 	// Use this for initialization
 	void Start () {
         rb = GetComponent<Rigidbody2D>();
         consumption = -25f;
         speed = -0.5f;
+        forward = gameObject.GetComponent<SpriteRenderer>().sprite;
     }
 	
 	// Update is called once per frame
 	void Update () {
 
-        if (Input.GetButton("Fire1"))
+        if (Input.GetButton("Fire1") && Time.time > nextBullet)
         {
-            if (loaded())
+            if (bulletEnd())
             {
+                nextBullet = Time.time + reloadTime;
                 fire();
             }   
         }
@@ -36,6 +44,18 @@ public class PlaneController : MonoBehaviour {
     {
         float turn = Input.GetAxisRaw("Horizontal");
         rb.velocity = new Vector2(turn * angle, 0f);
+        if (turn > 0)
+        {
+            gameObject.GetComponent<SpriteRenderer>().sprite = toRight;
+        }
+        else if (turn == 0)
+        {
+            gameObject.GetComponent<SpriteRenderer>().sprite = forward;
+        }
+        else
+        {
+            gameObject.GetComponent<SpriteRenderer>().sprite = toLeft;
+        }
 
         float throttle = Input.GetAxisRaw("Vertical");
         if (throttle > 0)
@@ -49,9 +69,11 @@ public class PlaneController : MonoBehaviour {
             speed = -0.2f;
         }
 
+
+
     }
 
-    bool loaded()
+    bool bulletEnd()
     {
         return (!GameObject.Find("Bullet(Clone)"));
     }
@@ -65,7 +87,7 @@ public class PlaneController : MonoBehaviour {
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag("Wall"))
+        if (collision.gameObject.CompareTag("Wall") || collision.gameObject.CompareTag("Enemy"))
         {
             Destroy(gameObject);
         }

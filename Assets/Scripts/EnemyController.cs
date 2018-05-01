@@ -2,10 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ShipController : MonoBehaviour {
+public class EnemyController : MonoBehaviour {
 
     public float speed;
     private Rigidbody2D rb;
+
+    public GameObject explosion;
+    private Vector2 explosionPos;
 
     // Use this for initialization
     void Start () {
@@ -23,6 +26,9 @@ public class ShipController : MonoBehaviour {
         if (collision.gameObject.CompareTag("Bullet") || collision.gameObject.CompareTag("Destroyer"))
         {
             Destroy(gameObject);
+            explosionPos = transform.position;
+            explosionPos += new Vector2(0f, 0f);
+            Instantiate(explosion, explosionPos, Quaternion.identity);
         }
     }
 }
