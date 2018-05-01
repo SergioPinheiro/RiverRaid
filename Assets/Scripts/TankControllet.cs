@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ShipController : MonoBehaviour {
+public class TankControllet : MonoBehaviour {
 
     public float speed;
     private Rigidbody2D rb;
@@ -16,6 +16,7 @@ public class ShipController : MonoBehaviour {
 	void Update () {
         rb.velocity = new Vector2(0f, speed);
         speed = PlaneController.speed;
+        //Destroy(gameObject, 15f);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

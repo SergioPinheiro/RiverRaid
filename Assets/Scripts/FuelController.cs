@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class FuelController : MonoBehaviour {
 
-    public float consumption;
+    private float consumption;
     private float max;
     private float min;
 
@@ -24,14 +24,34 @@ public class FuelController : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-        if (m_RectTransform.anchoredPosition.x > min && m_RectTransform.anchoredPosition.x < max)
+        consumption = PlaneController.consumption;
+
+        if (isMin() && consumption < 0)
         {
-            rb.velocity = new Vector2(consumption, 0f);
+            rb.velocity = new Vector2(0f, 0f);
+            //Debug.Log("Min");
+        } else if (isMax() && consumption > 0)
+        {
+            rb.velocity = new Vector2(0f, 0f);
+            //Debug.Log("Max");
         }
         else
         {
-            rb.velocity = new Vector2(0f, 0f);
+            rb.velocity = new Vector2(consumption, 0f);
+            //Debug.Log("Consumming");
         }
-        Debug.Log(min);
+        //rb.velocity = new Vector2(consumption, 0f);
+        //rb.velocity = new Vector2(0f, 0f);
+        //Debug.Log(consumption);
+    }
+
+    bool isMax()
+    {
+        return m_RectTransform.anchoredPosition.x >= max;
+    }
+
+    bool isMin()
+    {
+        return m_RectTransform.anchoredPosition.x <= min;
     }
 }

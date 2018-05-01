@@ -4,8 +4,10 @@ using UnityEngine;
 
 public class PlaneController : MonoBehaviour {
 
-    public float speed = 1f;
+    public static float speed;
+    private float angle = 1f;
     private Rigidbody2D rb;
+    public static float consumption;
 
     public GameObject bullet;
     private Vector2 bulletPos;
@@ -13,7 +15,9 @@ public class PlaneController : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         rb = GetComponent<Rigidbody2D>();
-	}
+        consumption = -25f;
+        speed = -0.5f;
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -31,8 +35,20 @@ public class PlaneController : MonoBehaviour {
     private void FixedUpdate()
     {
         float turn = Input.GetAxisRaw("Horizontal");
-        rb.velocity = new Vector2(turn * speed, 0f);
-        
+        rb.velocity = new Vector2(turn * angle, 0f);
+
+        float throttle = Input.GetAxisRaw("Vertical");
+        if (throttle > 0)
+        {
+            speed = -0.7f;
+        } else if(throttle == 0)
+        {
+            speed = -0.4f;
+        } else
+        {
+            speed = -0.2f;
+        }
+
     }
 
     bool loaded()
@@ -45,5 +61,26 @@ public class PlaneController : MonoBehaviour {
         bulletPos = transform.position;
         bulletPos += new Vector2(0, 0.14f);
         Instantiate(bullet, bulletPos, Quaternion.identity);
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("Wall"))
+        {
+            Destroy(gameObject);
+        }
+
+        if (collision.gameObject.CompareTag("FuelTank"))
+        {
+            consumption = 75f;
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("FuelTank"))
+        {
+           consumption = -25f;
+        }
     }
 }
