@@ -29,7 +29,7 @@ public class FuelController : MonoBehaviour {
         if (isMin() && consumption < 0)
         {
             rb.velocity = new Vector2(0f, 0f);
-            //Debug.Log("Min");
+            PlaneController.gameover = true;
         } else if (isMax() && consumption > 0)
         {
             rb.velocity = new Vector2(0f, 0f);

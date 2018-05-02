@@ -246,7 +246,11 @@
     <Compile Include="Assets\Scripts\ExplosionController.cs" />
     <Compile Include="Assets\Scripts\FuelController.cs" />
     <Compile Include="Assets\Scripts\PlaneController.cs" />
+    <Compile Include="Assets\Scripts\RestartButtonController.cs" />
+    <Compile Include="Assets\Scripts\ScoreController.cs" />
+    <Compile Include="Assets\Scripts\SpawnerController.cs" />
     <Compile Include="Assets\Scripts\TankControllet.cs" />
+    <Compile Include="Assets\Scripts\TextController.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="GenerateTargetFrameworkMonikerAttribute" />

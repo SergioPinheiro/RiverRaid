@@ -8,6 +8,8 @@ public class PlaneController : MonoBehaviour {
     private float angle = 1f;
     private Rigidbody2D rb;
     public static float consumption;
+    private float defaultConsumption = -5f;
+    private float defaultRefuel= 75f;
 
     public GameObject bullet;
     private Vector2 bulletPos;
@@ -18,12 +20,21 @@ public class PlaneController : MonoBehaviour {
     public Sprite toLeft;
     private Sprite forward;
 
-	// Use this for initialization
-	void Start () {
+    public static string text;
+
+    public static bool gameover;
+
+    private AudioSource audioS;
+
+    // Use this for initialization
+    void Start () {
         rb = GetComponent<Rigidbody2D>();
-        consumption = -25f;
+        consumption = defaultConsumption;
         speed = -0.5f;
         forward = gameObject.GetComponent<SpriteRenderer>().sprite;
+        text = "";
+        gameover = false;
+        audioS = GetComponent<AudioSource>();
     }
 	
 	// Update is called once per frame
@@ -68,7 +79,10 @@ public class PlaneController : MonoBehaviour {
         {
             speed = -0.2f;
         }
-
+        if (gameover)
+        {
+            gameOver();
+        }
 
 
     }
@@ -83,18 +97,20 @@ public class PlaneController : MonoBehaviour {
         bulletPos = transform.position;
         bulletPos += new Vector2(0, 0.14f);
         Instantiate(bullet, bulletPos, Quaternion.identity);
+        audioS.Play();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Wall") || collision.gameObject.CompareTag("Enemy"))
         {
-            Destroy(gameObject);
+            gameover = true;
+            gameOver();
         }
 
         if (collision.gameObject.CompareTag("FuelTank"))
         {
-            consumption = 75f;
+            consumption = defaultRefuel;
         }
     }
 
@@ -102,7 +118,16 @@ public class PlaneController : MonoBehaviour {
     {
         if (collision.gameObject.CompareTag("FuelTank"))
         {
-           consumption = -25f;
+           consumption = defaultConsumption;
         }
+    }
+
+    public void gameOver()
+    {
+        speed = 0f;
+        text = "Game Over!";
+        consumption = 0f;
+        Destroy(gameObject);
+        GameObject.Find("EnemySpawner").active = false;
     }
 }

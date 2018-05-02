@@ -13,6 +13,7 @@ public class EnemyController : MonoBehaviour {
     // Use this for initialization
     void Start () {
         rb = GetComponent<Rigidbody2D>();
+        
     }
 	
 	// Update is called once per frame
@@ -23,6 +24,10 @@ public class EnemyController : MonoBehaviour {
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        if(collision.gameObject.CompareTag("Bullet"))
+        {
+            ScoreController.score += 10;
+        }
         if (collision.gameObject.CompareTag("Bullet") || collision.gameObject.CompareTag("Destroyer"))
         {
             Destroy(gameObject);
