@@ -8,8 +8,8 @@ public class PlaneController : MonoBehaviour {
     private float angle = 1f;
     private Rigidbody2D rb;
     public static float consumption;
-    private float defaultConsumption = -5f;
-    private float defaultRefuel= 75f;
+    private float defaultConsumption = -0.01f;
+    private float defaultRefuel= 0.05f;
 
     public GameObject bullet;
     private Vector2 bulletPos;

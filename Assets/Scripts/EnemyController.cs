@@ -27,13 +27,14 @@ public class EnemyController : MonoBehaviour {
         if(collision.gameObject.CompareTag("Bullet"))
         {
             ScoreController.score += 10;
-        }
-        if (collision.gameObject.CompareTag("Bullet") || collision.gameObject.CompareTag("Destroyer"))
-        {
             Destroy(gameObject);
             explosionPos = transform.position;
             explosionPos += new Vector2(0f, 0f);
             Instantiate(explosion, explosionPos, Quaternion.identity);
+        }
+        if (collision.gameObject.CompareTag("Destroyer"))
+        {
+            Destroy(gameObject);
         }
     }
 }
